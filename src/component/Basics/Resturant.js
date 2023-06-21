@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./style.css";
 import Menu from "./menuApi.js";
 import MenuCard from "./MenuCard.js";
+import Navbar from "./Navbar.js";
 
 const uniqueList = [
   ...new Set(
@@ -9,12 +10,14 @@ const uniqueList = [
       return curElem.category;
     })
   ),
+  "All",
 ];
 
 console.log(uniqueList);
 
 const Resturant = () => {
   const [menuData, setMenuData] = useState(Menu);
+  const [menuList, setMenuList] = useState(uniqueList);
 
   const filterItem = (category) => {
     const updatedList = Menu.filter((curElem) => {
@@ -26,37 +29,7 @@ const Resturant = () => {
 
   return (
     <>
-      <nav className="navbar">
-        <div className="btn-group">
-          <button
-            className="btn-group__item"
-            onClick={() => filterItem("breakfast")}
-          >
-            Breakfast
-          </button>
-          <button
-            className="btn-group__item"
-            onClick={() => filterItem("lunch")}
-          >
-            Lunch
-          </button>
-          <button
-            className="btn-group__item"
-            onClick={() => filterItem("evening")}
-          >
-            Evening
-          </button>
-          <button
-            className="btn-group__item"
-            onClick={() => filterItem("lunch")}
-          >
-            Dinner
-          </button>
-          <button className="btn-group__item" onClick={() => setMenuData(Menu)}>
-            All
-          </button>
-        </div>
-      </nav>
+      <Navbar filterItem={filterItem} menuList={menuList} />
       <MenuCard menuData={menuData} />
     </>
   );
